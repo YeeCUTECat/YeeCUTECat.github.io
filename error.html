@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面不存在 | YeeCUTECat'homepage</title>
+    <!-- 与主页完全一致的字体、图标CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 完全复制主页CSS变量，保证配色100%统一 */
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #a855f7;
+            --accent-color: #ec4899;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        body.dark-mode {
+            --text-dark: #f9fafb;
+            --text-light: #9ca3af;
+            --bg-light: #111827;
+            --white: #1f2937;
+            --glass-bg: rgba(31, 41, 55, 0.85);
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* 导航栏简化版，只保留logo、首页文字、主题按钮 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .nav-center-simple a {
+            font-weight: 500;
+            color: var(--text-dark);
+            position: relative;
+        }
+        .nav-center-simple a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+        .nav-center-simple a:hover::after {
+            width: 100%;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .theme-btn:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* 404专属主区域 */
+        #error-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+            background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.1), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(99, 102, 241, 0.1), transparent 40%);
+        }
+        .error-wrap {
+            max-width: 600px;
+            padding: 40px 20px;
+        }
+        .error-code {
+            font-size: 120px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+        .error-title {
+            font-size: 2.2rem;
+            margin-bottom: 16px;
+        }
+        .error-desc {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        .error-btns {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* 页脚与主页统一 */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        body.dark-mode footer {
+            background: #0f172a;
+        }
+        .footer-content {
+            margin-bottom: 30px;
+        }
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 992px) {
+            .error-code {
+                font-size: 90px;
+            }
+            .error-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://yeecutecat.github.io/index_zh_cn.html" class="logo">YeeCUTECat</a>
+
+                <div class="nav-center-simple">
+                    <a href="https://yeecutecat.github.io/index_zh_cn.html">首页</a>
+                </div>
+
+                <div class="nav-right">
+                    <button class="theme-btn" id="themeToggle" title="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="error-page">
+        <div class="container error-wrap">
+            <div class="error-code">Error</div>
+            <h2 class="error-title">糟糕，页面走丢啦</h2>
+            <p class="error-desc">
+                你访问的页面已被删除、链接失效<br>
+                检查网址是否正确，或返回首页浏览以继续内容
+                𝓨𝓮𝓮𝓒𝓤𝓣𝓔𝓒𝓪𝓽~
+            </p>
+            <div class="error-btns">
+                <a href="https://yeecutecat.github.io/index_zh_cn.html" class="btn btn-primary"><i class="fas fa-home"></i> 返回首页</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h2>YeeCUTECat'homepage</h2>
+                <p>请暂时使用MC百科作为错误报告</p>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 YeeCUTECat. All Rights Reserved. Designed with <i class="fas fa-heart" style="color: var(--accent-color);"></i></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 主题切换（读取本地存储，和首页同步）
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const themeIcon = themeToggle.querySelector('i');
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>
