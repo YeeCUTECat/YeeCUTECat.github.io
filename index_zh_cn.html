@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YeeCUTECat'homepage</title>
-    <!-- 引入 FontAwesome 图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 引入 Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS 变量与重置 --- */
         :root {
             --primary-color: #6366f1;
             --secondary-color: #a855f7;
@@ -23,7 +20,6 @@
             --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
-        /* 黑夜模式变量 */
         body.dark-mode {
             --text-dark: #f9fafb;
             --text-light: #9ca3af;
@@ -58,8 +54,9 @@
         img {
             max-width: 100%;
             display: block;
+            user-select: none;
+            pointer-events: none;
         }
-        /* --- 通用组件 --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -112,7 +109,6 @@
         section {
             padding: 100px 0;
         }
-        /* --- 导航栏 --- */
         header {
             position: fixed;
             top: 0;
@@ -165,7 +161,6 @@
         .nav-links a.active::after {
             width: 100%;
         }
-        /* 下拉菜单样式 */
         .dropdown {
             position: relative;
         }
@@ -233,7 +228,6 @@
             cursor: pointer;
             color: var(--text-dark);
         }
-        /* --- Hero 区域 --- */
         #home {
             min-height: 100vh;
             display: flex;
@@ -269,6 +263,16 @@
         .hero-img {
             position: relative;
             text-align: center;
+            width: fit-content;
+            margin: 0 auto;
+            oncontextmenu: return false;
+        }
+        .avatar-mask {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            z-index: 2;
+            border-radius: inherit;
         }
         .hero-img img {
             width: 400px;
@@ -278,13 +282,14 @@
             box-shadow: var(--shadow);
             animation: morph 8s ease-in-out infinite;
             background-color: #eee;
+            position: relative;
+            z-index: 1;
         }
         @keyframes morph {
             0% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
             50% { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
             100% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
         }
-        /* --- 关于我 --- */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
@@ -328,7 +333,6 @@
             color: var(--text-light);
             margin-bottom: 20px;
         }
-        /* --- 技能 --- */
         #skills {
             background-color: var(--white);
         }
@@ -374,7 +378,6 @@
             width: 0;
             transition: width 1.5s ease-in-out;
         }
-        /* --- 作品集 --- */
         .portfolio-filter {
             display: flex;
             justify-content: center;
@@ -455,7 +458,6 @@
         .portfolio-links a:hover {
             text-decoration: underline;
         }
-        /* --- 经历时间轴 --- */
         #experience {
             background-color: var(--white);
         }
@@ -518,7 +520,6 @@
             margin-bottom: 5px;
             display: block;
         }
-        /* --- 联系我 --- */
         .contact-container {
             display: grid;
             grid-template-columns: 1fr;
@@ -568,7 +569,6 @@
             background: var(--primary-color);
             color: var(--white);
         }
-        /* --- 页脚 --- */
         footer {
             background: var(--text-dark);
             color: var(--white);
@@ -588,12 +588,11 @@
             color: #9ca3af;
             font-size: 0.9rem;
         }
-        /* --- 响应式 --- */
         @media (max-width: 992px) {
             .nav-center {
                 position: static;
                 transform: none;
-                display: none; /* 移动端隐藏中间菜单，由汉堡菜单控制 */
+                display: none;
             }
             .hero-content {
                 grid-template-columns: 1fr;
@@ -666,7 +665,6 @@
                 font-size: 2rem;
             }
             
-            /* 移动端下拉菜单调整 */
             .dropdown-menu {
                 position: static;
                 opacity: 1;
@@ -684,22 +682,19 @@
         }
     </style>
 </head>
-<body>
-    <!-- 导航栏 -->
+<body oncontextmenu="return false;">
     <header>
         <div class="container">
             <nav>
                 <a href="#" class="logo">YeeCUTECat</a>
                 
-                <!-- 中间导航链接 -->
                 <div class="nav-center">
                     <ul class="nav-links">
                         <li><a href="#home" class="active">首页</a></li>
                         <li><a href="#about">关于我</a></li>
-                        <li><a href="#portfolio"></a>教程</li>
+                        <li><a href="#portfolio">教程</a></li>
                         <li><a href="#experience">经历</a></li>
                         <li><a href="#contact">联系</a></li>
-                        <!-- 新增常用链接下拉菜单 -->
                         <li class="dropdown">
                             <span class="dropdown-toggle">常用链接 <i class="fas fa-chevron-down" style="font-size: 0.8em;"></i></span>
                             <div class="dropdown-menu">
@@ -708,9 +703,7 @@
                         </li>
                     </ul>
                 </div>
-                <!-- 右侧功能区 -->
                 <div class="nav-right">
-                    <!-- 主题切换按钮移至此处 -->
                     <button class="theme-btn" id="themeToggle" title="切换主题">
                         <i class="fas fa-moon"></i>
                     </button>
@@ -721,25 +714,24 @@
             </nav>
         </div>
     </header>
-    <!-- Hero 区域 -->
     <section id="home">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>Hello I'm<br><span>YeeCUTECat</span></h1>
-                    <p>我是一名学生</p>
+                    <p>我是一名六年级学生</p>
                     <div class="hero-btns">
                         <a href="#portfolio" class="btn btn-primary">查看教程</a>
                         <a href="#contact" class="btn btn-outline">联系我</a>
                     </div>
                 </div>
                 <div class="hero-img">
-                    <img src="https://i.mcmod.cn/user/avatar/142/1424171/1424171_1782728009_IFPG.png">
+                    <img src="./img/avatar.png" alt="个人头像照片">
+                    <div class="avatar-mask"></div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- 关于我 -->
     <section id="about">
         <div class="container">
             <div class="section-title">
@@ -777,7 +769,6 @@
             </div>
         </div>
     </section>
-    <!-- 作品集 -->
     <section id="portfolio">
         <div class="container">
             <div class="section-title">
@@ -790,7 +781,6 @@
                 <button class="filter-btn" data-filter="About usage">请等待上架</button>
             </div>
             <div class="portfolio-grid">
-                <!-- 项目 1 -->
                 <div class="portfolio-item" data-category="About usage">
                     <div class="portfolio-img">
                         <img src="https://www.mcmod.cn/pages/class/images/none.jpg" alt="该教程截图">
@@ -803,7 +793,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- 项目 2 -->
                 <div class="portfolio-item" data-category="About usage">
                     <div class="portfolio-img">
                         <img src="https://www.mcmod.cn/pages/class/images/none.jpg" alt="该教程截图">
@@ -816,7 +805,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- 项目 3 -->
                 <div class="portfolio-item" data-category="design">
                     <div class="portfolio-img">
                         <img src="https://www.mcmod.cn/pages/class/images/none.jpg" alt="该教程截图">
@@ -832,7 +820,6 @@
             </div>
         </div>
     </section>
-    <!-- 经历 -->
     <section id="experience">
         <div class="container">
             <div class="section-title">
@@ -869,7 +856,6 @@
             </div>
         </div>
     </section>
-    <!-- 联系我 -->
     <section id="contact">
         <div class="container">
             <div class="section-title">
@@ -896,7 +882,7 @@
                         </div>
                     </div>
                     <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
+                        <i class="fas map-marker-alt"></i>
                         <div>
                             <h4>地点</h4>
                             <p>中国 · ... .... . -. / --.. .... . -.</p>
@@ -912,7 +898,6 @@
             </div>
         </div>
     </section>
-    <!-- 页脚 -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -925,7 +910,12 @@
         </div>
     </footer>
     <script>
-        // 移动端菜单切换
+        document.onkeydown = function(e) {
+            if(e.key === 'F12') return false;
+            if(e.ctrlKey && e.shiftKey && e.key === 'I') return false;
+            if(e.ctrlKey && e.key === 'u') return false;
+        }
+
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
         const dropdowns = document.querySelectorAll('.dropdown');
@@ -940,7 +930,6 @@
                 icon.classList.add('fa-bars');
             }
         });
-        // 移动端下拉菜单点击处理
         dropdowns.forEach(dropdown => {
             const toggle = dropdown.querySelector('.dropdown-toggle');
             toggle.addEventListener('click', (e) => {
@@ -950,7 +939,6 @@
                 }
             });
         });
-        // 点击导航链接后关闭移动端菜单
         document.querySelectorAll('.nav-links a:not(.dropdown-toggle)').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
@@ -959,7 +947,6 @@
                 icon.classList.add('fa-bars');
             });
         });
-        // 导航栏滚动高亮
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section');
             const navLi = document.querySelectorAll('.nav-links li a:not(.dropdown-toggle)');
@@ -978,7 +965,6 @@
                 }
             });
         });
-        // 技能条动画
         const observerOptions = {
             threshold: 0.5
         };
@@ -997,7 +983,6 @@
         if (skillsSection) {
             observer.observe(skillsSection);
         }
-        // 作品集筛选功能
         const filterBtns = document.querySelectorAll('.filter-btn');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
         filterBtns.forEach(btn => {
@@ -1018,11 +1003,9 @@
                 });
             });
         });
-        // 主题切换逻辑
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const themeIcon = themeToggle.querySelector('i');
-        // 检查本地存储中是否有用户偏好
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'dark') {
             body.classList.add('dark-mode');
